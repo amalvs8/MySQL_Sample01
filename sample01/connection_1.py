@@ -15,18 +15,21 @@ def database_list(c_db):
     cursor_db.execute("SHOW DATABASES;")
     data = []
     for i in cursor_db:
-        data.append(i)
+        data.append(i[0])
     return data
 
-def database_detail(c_db, db):
+
+def table_list(c_db, db):
     cursor_db = c_db.cursor()
     cursor_db.execute("USE " + db + ";")
     cursor_db.execute("SHOW TABLES;")
     data = []
     for i in cursor_db:
-        data.append(i)
+        data.append(i[0])
+    if not data:
+        return None
     return data
-    return data
+
 
 def table_detail(c_db, tb):
     column = []
@@ -44,4 +47,6 @@ def table_detail(c_db, tb):
         for j in range(len(i)):
             di[column[j]] = i[j]
         data.append(di)
+        if not data:
+            return None
     return data
