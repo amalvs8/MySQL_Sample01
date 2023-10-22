@@ -2,22 +2,33 @@ import mysql.connector
 
 
 def connect_db():
-    mydb = mysql.connector.connect(
+    c_db = mysql.connector.connect(
       host="localhost",
       user="root",
       password="kl39r059708031994",
     )
-    return mydb
+    return c_db
 
 
-def get_database(c_db, db):
-    db_cursor = c_db.cursor()
-    db_cursor.execute("USE " + db)
-    db_cursor.execute("SHOW TABLES;")
-    return db_cursor
+def database_list(c_db):
+    cursor_db = c_db.cursor()
+    cursor_db.execute("SHOW DATABASES;")
+    data = []
+    for i in cursor_db:
+        data.append(i)
+    return data
 
+def database_detail(c_db, db):
+    cursor_db = c_db.cursor()
+    cursor_db.execute("USE " + db + ";")
+    cursor_db.execute("SHOW TABLES;")
+    data = []
+    for i in cursor_db:
+        data.append(i)
+    return data
+    return data
 
-def get_table(c_db, tb):
+def table_detail(c_db, tb):
     column = []
     data = []
     cursor_db = c_db.cursor()

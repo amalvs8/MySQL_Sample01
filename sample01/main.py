@@ -1,15 +1,17 @@
 from connection_1 import *
 
-
 c_db = connect_db()
+data = database_list(c_db)
+for i in data:
+    print(". " + i[0])
 db = input("Enter DB Name: ")
 # try:
-data = get_database(c_db, db)
+data = database_detail(c_db, db)
 print("Tables: ")
 for i in data:
     print(". " + i[0])
 tb = input("Enter Table Name: ")
-data = get_table(c_db, tb)
+data = table_detail(c_db, tb)
 for i in data:
     print(i)
 # except mysql.connector.errors.ProgrammingError:
