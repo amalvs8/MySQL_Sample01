@@ -16,6 +16,8 @@ def database_list(c_db):
     data = []
     for i in cursor_db:
         data.append(i[0])
+    if not data:
+        return None
     return data
 
 

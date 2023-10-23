@@ -18,14 +18,14 @@ def post_tb(db):
     tb = input("Enter New Table Name: ")
     if tb_exists(c_db, db, tb):
         print("Table name already exists")
-        get_db()
+        get_tb(db)
     else:
         arg = {}
         col = []
         d_type = []
         n = int(input("Enter No. of Columns: "))
         for i in range(n):
-            print("Enter Column Names: ")
+            print("Enter Column Name: ")
             col.append(input())
             print("Enter Datatype: str/int ")
             d_type.append(input())
@@ -34,43 +34,55 @@ def post_tb(db):
         status = create_tb(c_db, tb, arg)
         if status:
             print("Table Created")
+            get_tb(db)
         else:
             print("Unable to Create")
 
 
 def get_db():
     data = database_list(c_db)
+    print("___Database___")
     for i in data:
         print(". " + i)
     db = input("Enter DB Name: ")
-    try:
-        print("1. Create Table")
-        print("2. Show Table")
-        choice = input()
-        if choice == "1":
-            post_tb(db)
-        elif choice == "2":
-            data = table_list(c_db, db)
-            print("Tables: ")
-            if not data:
-                print(None)
-                exit()
-            else:
-                for i in data:
-                    print(". " + i)
-            tb = input("Enter Table Name: ")
-            data = table_detail(c_db, tb)
-            if not data:
-                print(None)
-                exit()
-            else:
-                for i in data:
-                    print(i)
-        else:
-            print("Invalid Entry")
+    if db_exists(c_db, db):
+        get_tb(db)
+    else:
+        print("DB Doesn't Exists")
+        get_db()
 
-    except mysql.connector.errors.ProgrammingError:
-        print("Invalid Entry")
+
+def get_tb(db):
+    data = table_list(c_db, db)
+    print("___Tables___")
+    if not data:
+        print(None)
+        get_db()
+    else:
+        for i in data:
+            print(". " + i)
+    print("1. Create Table")
+    print("2. Show Table")
+    choice = input()
+    if choice == "1":
+        post_tb(db)
+    elif choice == "2":
+        tb_detail(db)
+
+
+def tb_detail(db):
+    tb = input("Enter Table Name: ")
+    if tb_exists(c_db, db, tb):
+        data = table_detail(c_db, tb)
+        if not data:
+            print(None)
+            exit()
+        else:
+            for i in data:
+                print(i)
+    else:
+        print("Table doesn't Exists")
+        get_tb(db)
 
 
 c_db = connect_db()
