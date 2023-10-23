@@ -46,3 +46,4 @@ def create_tb(c_db, tb, arg):
         return True
     except mysql.connector.errors.ProgrammingError:
         return False
+print("ksdbfgi")
