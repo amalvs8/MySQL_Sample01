@@ -98,3 +98,4 @@ def tb_detail(db):
 
 c_db = connect_db()
 get_db()
+print("hello")
