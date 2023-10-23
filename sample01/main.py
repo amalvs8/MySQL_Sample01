@@ -44,11 +44,20 @@ def get_db():
     print("___Database___")
     for i in data:
         print(". " + i)
-    db = input("Enter DB Name: ")
-    if db_exists(c_db, db):
-        get_tb(db)
+    print("1. Create Database")
+    print("2. Show Database")
+    choice = input()
+    if choice == "1":
+        post_db()
+    elif choice == "2":
+        db = input("Enter DB Name: ")
+        if db_exists(c_db, db):
+            get_tb(db)
+        else:
+            print("DB Doesn't Exists")
+            get_db()
     else:
-        print("DB Doesn't Exists")
+        print("Invalid Entry")
         get_db()
 
 
@@ -57,7 +66,6 @@ def get_tb(db):
     print("___Tables___")
     if not data:
         print(None)
-        get_db()
     else:
         for i in data:
             print(". " + i)
@@ -68,6 +76,9 @@ def get_tb(db):
         post_tb(db)
     elif choice == "2":
         tb_detail(db)
+    else:
+        print("Invalid Entry")
+        get_tb(db)
 
 
 def tb_detail(db):
@@ -86,12 +97,4 @@ def tb_detail(db):
 
 
 c_db = connect_db()
-print("1. Create Database")
-print("2. Show Database")
-ch = input()
-if ch == "1":
-    post_db()
-elif ch == "2":
-    get_db()
-else:
-    print("Invalid Entry")
+get_db()
